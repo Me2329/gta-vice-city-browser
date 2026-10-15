@@ -1,0 +1,20 @@
+[build]
+  command = "npm install && npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Netlify serves the site at the domain root, not /gta-vice-city-wasm/
+  VITE_BASE = "/"
+
+# SharedArrayBuffer (used by the WASM engine) needs cross-origin isolation
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "require-corp"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
